@@ -26,7 +26,7 @@ public class Interface extends javax.swing.JFrame {
         setTitle("Mini PC");
         initComponents();
         this.setLocationRelativeTo(null);
-        txt_file.setText("Ningun arhcivo seleccionado");
+        txt_file.setText("Ningún archivo seleccionado");
     }
 
     /**
