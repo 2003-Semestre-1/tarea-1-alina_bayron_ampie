@@ -9,8 +9,11 @@ import java.io.File;
 import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.Stack;
+import java.util.ArrayList;
+
 
 import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 /**
  *
@@ -19,10 +22,13 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 public class Interface extends javax.swing.JFrame {
 
     //private Reader readers = new Reader();
+    
     private String filePath = "";
     private String fileContent = "";
     private Stack pila = new Stack();
     private Reader readers = new Reader();
+    ArrayList<String> fileLines = new ArrayList<>();
+    int pos = 0;
     //private Convert convertor = new Convert();
     
     public Interface() {
@@ -592,7 +598,13 @@ public class Interface extends javax.swing.JFrame {
 
         btn_next_line.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         btn_next_line.setText("Siguiente instrucción ");
+        btn_next_line.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_next_lineActionPerformed(evt);
+            }
+        });
 
+        txt_file.setEditable(false);
         txt_file.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         txt_file.setText("Ningún archivo seleccionado");
         txt_file.addActionListener(new java.awt.event.ActionListener() {
@@ -644,14 +656,14 @@ public class Interface extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btn_searchFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_searchFileActionPerformed
+        readers.setParams();
         JFileChooser fileChooser = new JFileChooser();
         fileChooser.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
-        FileNameExtensionFilter fileFilter = new FileNameExtensionFilter("File asm", "asm");
+        FileNameExtensionFilter fileFilter = new FileNameExtensionFilter("Files asm", "asm"); 
+        fileChooser.setFileFilter(fileFilter);
         int result = fileChooser.showOpenDialog(this);
         File selectFile = fileChooser.getSelectedFile();
-        fileChooser.setFileFilter(fileFilter);
-        System.out.println(selectFile);
-        readers.readFile(selectFile);
+        fileLines = readers.readFile(selectFile);
         
         if (result != JFileChooser.CANCEL_OPTION) {
 
@@ -667,7 +679,7 @@ public class Interface extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_searchFileActionPerformed
 
     private void btn_resetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_resetActionPerformed
-
+        readers.setParams();
         Interface b = new Interface();
         b.setVisible(true);
         dispose();
@@ -676,6 +688,18 @@ public class Interface extends javax.swing.JFrame {
     private void txt_fileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_fileActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txt_fileActionPerformed
+
+    private void btn_next_lineActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_next_lineActionPerformed
+        String line;
+        line = readers.getLine();
+        if (line== null){
+            JOptionPane.showMessageDialog(null, "No hay lineas para procesar", "Error", JOptionPane.ERROR_MESSAGE);
+        }else{
+            System.out.println(line);
+            jTableMain.setValueAt(line , pos, 0);
+            pos++;
+        }
+    }//GEN-LAST:event_btn_next_lineActionPerformed
 
     /**
      * @param args the command line arguments

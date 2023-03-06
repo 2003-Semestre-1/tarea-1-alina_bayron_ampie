@@ -16,9 +16,11 @@ import javax.swing.JOptionPane;
  * @author Alina
  */
 public class Reader {
+    ArrayList<String> fileLines = new ArrayList<>();
+    int pos = 0;
+    int cant_lines = 0;
     
     public ArrayList<String> readFile (File fileName){
-        ArrayList<String> fileLines = new ArrayList<String>();
         if (validateFile (fileName)){
             try {
                 BufferedReader prompter = new BufferedReader(new FileReader(fileName));
@@ -27,12 +29,14 @@ public class Reader {
                     fileLines.add(line); //linea leida del archivo
                     validateSyntax(line);
                     System.out.println(line);
+                    cant_lines++;
                 }
                 prompter.close();
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
+        System.out.println(cant_lines);
         return fileLines;
     }
 
@@ -100,7 +104,22 @@ public class Reader {
     private boolean esOperando(String token) {
         return token.matches("-?\\d+|\\[(AX|BX|CX|DX)\\]");
     }
-
+    
+    public String getLine(){
+        String line;
+        if (pos < cant_lines){
+            line = fileLines.get(pos);
+            pos++;
+            return line;
+        }else{
+            return null;
+        }
+    }
+    
+    public void setParams(){
+        pos = 0;
+        cant_lines = 0;
+    }
 
     
 }//final de la clase
