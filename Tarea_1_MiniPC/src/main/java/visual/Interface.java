@@ -629,8 +629,8 @@ public class Interface extends javax.swing.JFrame {
         JFileChooser fileChooser = new JFileChooser();
         fileChooser.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
 
-        FileNameExtensionFilter imgFilter = new FileNameExtensionFilter("file asm", "asm"); 
-        fileChooser.setFileFilter(imgFilter);
+        FileNameExtensionFilter fileFilter = new FileNameExtensionFilter("file asm", "asm"); 
+        fileChooser.setFileFilter(fileFilter);
 
         int result = fileChooser.showOpenDialog(this);
 
