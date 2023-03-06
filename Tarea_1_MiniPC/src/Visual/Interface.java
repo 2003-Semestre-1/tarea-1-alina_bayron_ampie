@@ -2,9 +2,11 @@
 package Visual;
 
 //import controler.Convert;
-//import controler.Reader;
+import Controler.Reader;
+import java.io.BufferedReader;
 //import Model.Memory;
 import java.io.File;
+import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.Stack;
 
@@ -17,8 +19,10 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 public class Interface extends javax.swing.JFrame {
 
     //private Reader readers = new Reader();
+    private String filePath = "";
     private String fileContent = "";
     private Stack pila = new Stack();
+    private Reader readers = new Reader();
     //private Convert convertor = new Convert();
     
     public Interface() {
@@ -43,7 +47,8 @@ public class Interface extends javax.swing.JFrame {
         btn_reset = new javax.swing.JButton();
         btn_searchFile = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
-        txt_file = new javax.swing.JLabel();
+        btn_next_line = new javax.swing.JButton();
+        txt_file = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -585,8 +590,16 @@ public class Interface extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel1.setText("Nombre del archivo:");
 
+        btn_next_line.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        btn_next_line.setText("Siguiente instrucción ");
+
         txt_file.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        txt_file.setName("txt_file"); // NOI18N
+        txt_file.setText("Ningún archivo seleccionado");
+        txt_file.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txt_fileActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -594,33 +607,38 @@ public class Interface extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(15, 15, 15)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txt_file, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGap(18, 18, 18)
+                        .addComponent(txt_file, javax.swing.GroupLayout.PREFERRED_SIZE, 276, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btn_searchFile, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(btn_reset, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 754, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 754, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(20, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btn_next_line)
+                .addGap(44, 44, 44))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(44, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btn_searchFile, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btn_reset, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txt_file, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(31, 31, 31)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 380, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(14, 14, 14))
+                .addContainerGap(18, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btn_reset, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(btn_searchFile, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txt_file, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 315, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btn_next_line, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(13, 13, 13))
         );
-
-        txt_file.getAccessibleContext().setAccessibleName("txt_file");
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -628,12 +646,13 @@ public class Interface extends javax.swing.JFrame {
     private void btn_searchFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_searchFileActionPerformed
         JFileChooser fileChooser = new JFileChooser();
         fileChooser.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
-
-        FileNameExtensionFilter fileFilter = new FileNameExtensionFilter("file asm", "asm"); 
-        fileChooser.setFileFilter(fileFilter);
-
+        FileNameExtensionFilter fileFilter = new FileNameExtensionFilter("File asm", "asm");
         int result = fileChooser.showOpenDialog(this);
-
+        File selectFile = fileChooser.getSelectedFile();
+        fileChooser.setFileFilter(fileFilter);
+        System.out.println(selectFile);
+        readers.readFile(selectFile);
+        
         if (result != JFileChooser.CANCEL_OPTION) {
 
             File fileName = fileChooser.getSelectedFile();
@@ -641,9 +660,10 @@ public class Interface extends javax.swing.JFrame {
             if ((fileName == null) || (fileName.getName().equals(""))) {
                 txt_file.setText("...");
             } else {
-                txt_file.setText(fileName.getAbsolutePath());
+                txt_file.setText(fileName.getName());
             }
         }
+        
     }//GEN-LAST:event_btn_searchFileActionPerformed
 
     private void btn_resetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_resetActionPerformed
@@ -652,6 +672,10 @@ public class Interface extends javax.swing.JFrame {
         b.setVisible(true);
         dispose();
     }//GEN-LAST:event_btn_resetActionPerformed
+
+    private void txt_fileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_fileActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txt_fileActionPerformed
 
     /**
      * @param args the command line arguments
@@ -690,11 +714,12 @@ public class Interface extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btn_next_line;
     private javax.swing.JButton btn_reset;
     private javax.swing.JButton btn_searchFile;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTableMain;
-    private javax.swing.JLabel txt_file;
+    private javax.swing.JTextField txt_file;
     // End of variables declaration//GEN-END:variables
 }
