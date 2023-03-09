@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package Controler; //CAMBIAR NOMBRE DE PAQUETE
 
 import java.io.BufferedReader;
@@ -28,7 +24,6 @@ public class Reader {
                 while ((line = prompter.readLine()) != null) {
                     fileLines.add(line); //linea leida del archivo
                     validateSyntax(line);
-                    System.out.println(line);
                     cant_lines++;
                 }
                 prompter.close();
@@ -36,7 +31,6 @@ public class Reader {
                 e.printStackTrace();
             }
         }
-        System.out.println(cant_lines);
         return fileLines;
     }
 
@@ -120,7 +114,6 @@ public class Reader {
         pos = 0;
         cant_lines = 0;
     }
-
     
 }//final de la clase
 
