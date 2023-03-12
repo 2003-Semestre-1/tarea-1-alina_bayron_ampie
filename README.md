@@ -6,5 +6,5 @@
 
 ### Estado del proyecto: 2
 ### Plataforma utilizada: Netbeans
-### Enlace del video: 
-Recordar que el video debe ser **público** y con **sonido** para ser visto y escuchado por el profesor
+### Enlace del video T1 Mini PC: 
+https://youtu.be/bZvJO5tCfOU
